@@ -7,7 +7,7 @@ permissions:
 
 jobs:
     dependabot:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         if: ${{ github.actor == 'dependabot[bot]' }}
         steps:
             - name: Dependabot metadata
@@ -23,7 +23,20 @@ jobs:
                   PR_URL: ${{github.event.pull_request.html_url}}
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+            - uses: actions/checkout@v3
+              if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
+              with:
+                  fetch-depth: 0
+
+            - name: Parse version
+              if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
+              id: version_parse
+              run: |
+                  cat Dockerfile|grep "FROM bitnami/kubectl"| sed -e 's/.*kubectl\:\([0-9.]\+\).*/\1/' > version.txt
+                  echo "::set-output name=KUBECTL_VERSION::$(cat version.txt | tr -d '\n')"
+
             - name: Create new release for a new kubectl release
-              run: gh release create ${{ steps.dependabot-metadata.outputs.new-version }}
+              if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
+              run: gh release create v${{ steps.version_parse.KUBECTL_VERSION }}
               env:
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

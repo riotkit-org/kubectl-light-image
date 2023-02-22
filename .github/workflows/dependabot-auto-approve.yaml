@@ -30,14 +30,13 @@ jobs:
 
             - name: Parse version
               if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
-              id: version_parse
               run: |
                   cat Dockerfile|grep "FROM bitnami/kubectl"| sed -e 's/.*kubectl\:\([0-9.]\+\).*/\1/' > version.txt
-                  echo "KUBECTL_VERSION=$(cat version.txt | tr -d '\n')" >> $GITHUB_OUTPUT
+                  echo "KUBECTL_VERSION=$(cat version.txt | tr -d '\n')" >> $GITHUB_ENV
                   echo ">> Version: $(cat version.txt | tr -d '\n')"
 
             - name: Create new release for a new kubectl release
               if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
-              run: gh release create v${{ steps.version_parse.KUBECTL_VERSION }}
+              run: gh release create v${{ env.KUBECTL_VERSION }}
               env:
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

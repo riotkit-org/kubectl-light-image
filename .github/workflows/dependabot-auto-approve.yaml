@@ -39,4 +39,4 @@ jobs:
               if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
               run: gh release create v${{ env.KUBECTL_VERSION }}
               env:
-                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                  GITHUB_TOKEN: ${{ secrets.GH_RW_TOKEN }}

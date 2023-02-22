@@ -17,6 +17,7 @@ What's inside?
 - [kubectl](https://hub.docker.com/r/bitnami/kubectl/tags)
 - [krew](https://krew.sigs.k8s.io/)
 - [neat](https://github.com/itaysk/kubectl-neat)
+- Python 3.11
 
 License
 -------

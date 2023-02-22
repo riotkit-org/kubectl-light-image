@@ -28,6 +28,12 @@ jobs:
               with:
                   fetch-depth: 0
 
+            - name: Checkout PR
+              if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
+              uses: dawidd6/action-checkout-pr@v1
+              with:
+                  pr: ${{github.event.pull_request.id}}
+
             - name: Parse version
               if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
               run: |

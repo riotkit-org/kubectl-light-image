@@ -27,12 +27,7 @@ jobs:
               if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
               with:
                   fetch-depth: 0
-
-            - name: Checkout PR
-              if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
-              run: gh pr checkout ${{github.event.pull_request.id}}
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GH_RW_TOKEN }}
+                  ref: "${{github.event.pull_request.head.sha}}"
 
             - name: Parse version
               if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}

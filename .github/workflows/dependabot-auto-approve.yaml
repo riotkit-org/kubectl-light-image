@@ -25,3 +25,5 @@ jobs:
 
             - name: Create new release for a new kubectl release
               run: gh release create ${{ steps.dependabot-metadata.outputs.new-version }}
+              env:
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

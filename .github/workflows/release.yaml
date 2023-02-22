@@ -1,0 +1,9 @@
+name: Release
+on:
+    push:
+
+jobs:
+    release-container:
+        uses: riotkit-org/.github/.github/workflows/release.container.yaml@release-1
+        with:
+            dockerImage: ghcr.io/riotkit-org/kubectl-light-image

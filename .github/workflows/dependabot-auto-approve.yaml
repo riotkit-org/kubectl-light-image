@@ -30,9 +30,9 @@ jobs:
 
             - name: Checkout PR
               if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}
-              uses: dawidd6/action-checkout-pr@v1
-              with:
-                  pr: ${{github.event.pull_request.id}}
+              run: gh pr checkout ${{github.event.pull_request.id}}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_RW_TOKEN }}
 
             - name: Parse version
               if: ${{contains(steps.metadata.outputs.dependency-names, 'kubectl')}}

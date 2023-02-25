@@ -3,7 +3,7 @@ FROM python:3.11-alpine3.17
 
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.krew/bin
 
-RUN apk add --update git curl
+RUN apk add --update git curl bash
 
 # Kubectl
 COPY --from=kubectl /opt/bitnami/kubectl/bin/kubectl /usr/bin/kubectl

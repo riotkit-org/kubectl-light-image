@@ -1,4 +1,4 @@
-FROM bitnami/kubectl:1.26.4 as kubectl
+FROM bitnami/kubectl:1.27.1 as kubectl
 FROM python:3.11-alpine3.17
 
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.krew/bin
